@@ -1,22 +1,29 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 
 const MyForm = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    data: '',
-  });
+ const [poetName, setPoetName] = useState('');
+ const [poetry, setPoetry] = useState('');
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  
+ const sendData = () =>{
+    axios.post('https://backend-poetry-api-iba-final.vercel.app/api/v1/createPoetry',{
+      poet:poetName,
+      data:poetry
+    }).then(()=>{
+      alert('success')
+    }).catch(()=>{
+      alert('error')
+    })
+    setPoetName('');  
+    setPoetry('');
+    }
+ 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add your form submission logic here
-    console.log('Form submitted:', formData);
+    sendData()
+    console.log('Form submitted:', sendData);
   };
 
   return (
@@ -34,8 +41,8 @@ const MyForm = () => {
             type="text"
             id="name"
             name="name"
-            value={formData.name}
-            onChange={handleChange}
+            value={poetName}
+            onChange={(e)=>setPoetName(e.target.value)}
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
             placeholder="Enter your Poet name"
             required
@@ -49,8 +56,8 @@ const MyForm = () => {
             type="text"
             id="data"
             name="data"
-            value={formData.data}
-            onChange={handleChange}
+            value={poetry}
+            onChange={(e)=>setPoetry(e.target.value)}
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
             placeholder="Enter your Poetry"
             required
@@ -58,6 +65,7 @@ const MyForm = () => {
         </div>
         <button
           type="submit"
+          
           className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
         >
           Submit

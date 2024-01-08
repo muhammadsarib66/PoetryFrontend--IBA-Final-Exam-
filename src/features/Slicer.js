@@ -1,38 +1,37 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-// import { build } from "vite";
 
 
-export const getUsers = createAsyncThunk("users/getUsers", async () =>{
-await axios.get("https://jsonplaceholder.typicode.com/users").then((res) => {
-    console.log(res.data)
-    return res.data
-})
-})
+export const getUsers = createAsyncThunk("poetry", async () => {
+    const result = await axios.get("https://backend-poetry-api-iba-final.vercel.app/api/v1/getPoetry")
+        .then((response) => response.data.data)
+        ;
+    return result;
+});
+
 let initialState = {
     loading: false,
-    users:[],
+    users: [],
     error: ''
 }
 
-
 const Slicer = createSlice({
     initialState,
-    name: 'show', 
-    reducers:{
+    name: 'show',
+    reducers: {
         getUsersData: (state, action) => {
             state.users = action.payload
         }
     },
-    extraReducers :builder=> {
-        builder.addCase(getUsers.pending, (state, action) => {  
+    extraReducers: builder => {
+        builder.addCase(getUsers.pending, (state, action) => {
             state.loading = true
         }
-        )   
+        )
         builder.addCase(getUsers.fulfilled, (state, action) => {
             state.loading = false;
-            console.log('fulfilled',action.payload);
-            state.error = '';
+            console.log('sss', action.payload)
+            state.users = action.payload;
 
         });
         builder.addCase(getUsers.rejected, (state, action) => {
@@ -43,5 +42,5 @@ const Slicer = createSlice({
     }
 })
 
-export const {getUsersData} = Slicer.actions
+export const { getUsersData } = Slicer.actions
 export default Slicer.reducer

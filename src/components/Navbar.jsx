@@ -21,13 +21,13 @@ const Navbar = () => {
         {/* <Link to="/add"> */}
           <p >
 
-            Create Poetry
+            REFRESH PLEASE WHEN THE DATA
             </p>
           {/* </Link> */}
           {/* <Link to="/"> */}
-          <p>
+          {/* <p>
             View All Poetry
-            </p>
+            </p> */}
           {/* </Link> */}
           {/* <a href="#view-all-poetry" className="text-white hover:text-gray-300">
             View All Poetry
